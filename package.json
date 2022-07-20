@@ -1,0 +1,23 @@
+{
+  "name": "qin_desk",
+  "displayName": "QinDesk",
+  "description": "QinDesk is the manager of user applications for the Pointel platform. Is the frontend of the Qinpel, the Quick Interface for Power Intelligence.",
+  "keywords": [],
+  "repository": "https://github.com/pointeldevs/qin_desk",
+  "author": "Éverton M. Vieira",
+  "license": "LGPL-3.0-only",
+  "version": "0.1.0",
+  "main": "./build/main.js",
+  "types": "./types/main.d.ts",
+  "dependencies": {
+    "axios": "^0",
+    "crypto-js": "^4",
+    "qin_soul": "file:../qin_soul"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4",
+    "@types/node": "^17",
+    "typescript": "^4",
+    "webpack-cli": "^4"
+  }
+}

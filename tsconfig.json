@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "types",
+    "declarationMap": true,
+    "removeComments": true,
+    "outDir": "build"
+  },
+  "files": ["src/main.ts", "src/index.ts", "src/login.ts", "src/desk.ts"],
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
