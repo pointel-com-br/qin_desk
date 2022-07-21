@@ -4,23 +4,22 @@ import os
 import sys
 from typing import List
 
-search_for = ["export class", "export abstract class", "export type", "export interface",
-              "export enum", "export const", "export function"]
+search_for = ["export class ", "export abstract class ", "export type ", "export interface ",
+              "export enum ", "export const ", "export function "]
 
 
 def get_exported(line: str) -> str:
+    line = line.strip()
     for searching in search_for:
         if line.startswith(searching):
-            delimiter = line.find("=", len(searching))
-            if delimiter == -1:
-                delimiter = line.find("(", len(searching))
-            if delimiter == -1:
-                delimiter = line.find("<", len(searching))
-            if delimiter == -1:
-                delimiter = line.find("{", len(searching))
-            if delimiter == -1:
-                delimiter = len(line)
-            return line[len(searching):delimiter].strip()
+            start_at = -1
+            for index in range(len(searching), len(line)):
+                if start_at == -1:
+                    if line[index] != ' ':
+                        start_at = index
+                else:
+                    if line[index] in [' ', '<', '(', '{']:
+                        return line[start_at:index]
     return ""
 
 
@@ -54,6 +53,5 @@ def mk_all():
 
 if __name__ == "__main__":
     mk_all()
-
-
-sys.modules[__name__] = mk_all
+else:
+    sys.modules[__name__] = mk_all

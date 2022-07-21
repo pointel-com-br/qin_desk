@@ -3,17 +3,26 @@
 import os
 import sys
 
-import mk_all
+
+def generate():
+    print("Generating...")
+    for path in os.listdir("."):
+        if path.startswith("mk_") and path.endswith(".py"):
+            with open(path) as file:
+                exec(file.read(), globals())
 
 
 def build():
-    mk_all()
     print("Building...")
     os.system("npx tsc --build --verbose")
 
 
-if __name__ == "__main__":
+def generate_and_build():
+    generate()
     build()
 
 
-sys.modules[__name__] = build
+if __name__ == "__main__":
+    generate_and_build()
+else:
+    sys.modules[__name__] = generate_and_build
