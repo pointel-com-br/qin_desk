@@ -59,7 +59,7 @@ export class QinDesk {
             return;
           }
           const title = manifest.title;
-          const icon = "../" + name + "/favicon.ico";
+          const icon = "/app/" + name + "/favicon.ico";
           this.addMenu(
             this.divApps,
             this.newMenu(title, icon, (ev) => {
