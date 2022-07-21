@@ -6,6 +6,9 @@ import sys
 
 def publish(mode: str):
     print("Publishing...")
+    if not os.path.exists('public'):
+        print("There is nothing to be published.")
+        return
     for public_file in os.listdir("public"):
         if public_file.endswith(".build-js"):
             named = public_file.replace(".build-js", ".js")
@@ -17,6 +20,5 @@ def publish(mode: str):
 
 if __name__ == "__main__":
     publish("development")
-
-
-sys.modules[__name__] = publish
+else:
+    sys.modules[__name__] = publish

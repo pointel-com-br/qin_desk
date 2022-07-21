@@ -36,10 +36,10 @@ def get_all(source: str) -> List[str]:
 
 
 def mk_all():
+    print("Making 'src/all.ts'...")
     if not os.path.exists('src/all.ts'):
         print("Does not need to make an all.ts source.")
         return
-    print("Making 'src/all.ts'...")
     founds: List[str] = []
     for source in os.listdir("src"):
         if source.endswith(".ts"):
