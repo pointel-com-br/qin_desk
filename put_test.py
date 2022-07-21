@@ -3,11 +3,11 @@
 import os
 import shutil
 
-import build
-import publish
+import gen_build
+import pk_public
 
 qin_root = os.environ['QIN_ROOT']
-build()
-publish("development")
+gen_build()
+pk_public("development")
 shutil.copytree(
     "./public", f"{qin_root}/Test/pub/qin_desk", dirs_exist_ok=True)

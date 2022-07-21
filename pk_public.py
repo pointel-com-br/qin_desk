@@ -4,10 +4,10 @@ import os
 import sys
 
 
-def publish(mode: str):
-    print("Publishing...")
+def pack_public(mode: str):
+    print("Packing...")
     if not os.path.exists('public'):
-        print("There is nothing to be published.")
+        print("There is nothing to be packed.")
         return
     for public_file in os.listdir("public"):
         if public_file.endswith(".build-js"):
@@ -19,6 +19,6 @@ def publish(mode: str):
 
 
 if __name__ == "__main__":
-    publish("development")
+    pack_public("development")
 else:
-    sys.modules[__name__] = publish
+    sys.modules[__name__] = pack_public
