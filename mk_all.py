@@ -18,7 +18,7 @@ def get_exported(line: str) -> str:
                     if line[index] != ' ':
                         start_at = index
                 else:
-                    if line[index] in [' ', '<', '(', '{']:
+                    if line[index] in [' ', '<', '(', '{', '=']:
                         return line[start_at:index]
     return ""
 
