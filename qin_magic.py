@@ -28,7 +28,8 @@ def app_automagic():
 
 def app_mk_put_mode(app_name: str, mode: str):
     kind = 'PUB'
-    if app_name.startswith("qia_") or app_name == "qin_case":
+    folder_name = get_folder_name()
+    if folder_name.startswith("qia_") or folder_name == "qin_case":
         kind = "APP"
     source = f"""#!/usr/bin/env python3
 import put_on
@@ -52,6 +53,10 @@ def get_app_name() -> str:
         if close_at == -1:
             return ""
         return package[open_at+1:close_at]
+
+
+def get_folder_name() -> str:
+    return os.path.basename(os.getcwd())
 
 
 def download(origin: str, destiny: str):
