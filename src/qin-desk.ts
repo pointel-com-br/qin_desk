@@ -87,7 +87,6 @@ export class QinDesk {
     }
     if (shouldAdd(this.options.addsCfgs, { title: "QinBases" })) {
       this.qinpel.talk.get("/list/bases").then((res) => {
-        let data = res.data;
         let bases = this.qinpel.our.soul.body.getTextLines(res.data);
         this.addQinBases(bases);
       });
@@ -116,6 +115,10 @@ export class QinDesk {
       this.qinpel.chief.saveConfig(QinNames.QinBaseSelected, actual);
     }
     let items = new Array<ComboItem>();
+    items.push({
+      title: "",
+      selected: false,
+    });
     for (let base of bases) {
       items.push({
         title: base,
