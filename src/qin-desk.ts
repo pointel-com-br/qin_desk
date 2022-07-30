@@ -114,6 +114,9 @@ export class QinDesk {
       actual = bases[0];
       this.qinpel.chief.saveConfig(QinNames.QinBaseSelected, actual);
     }
+    if (bases.length === 1) {
+      return;
+    }
     let items = new Array<ComboItem>();
     items.push({
       title: "",
