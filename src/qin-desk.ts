@@ -80,29 +80,12 @@ export class QinDesk {
     this.divCfgs = document.createElement("div");
     this.divMain.appendChild(this.divCfgs);
     styles.applyOnDivLine(this.divCfgs);
-    if (QinSoul.foot.isLocalHost()) {
-      if (shouldAdd(this.options.addsCfgs, { title: "DevTools" })) {
-        this.addDevTools();
-      }
-    }
     if (shouldAdd(this.options.addsCfgs, { title: "QinBases" })) {
       this.qinpel.talk.get("/list/bases").then((res) => {
         let bases = this.qinpel.our.soul.body.getTextLines(res.data);
         this.addQinBases(bases);
       });
     }
-  }
-
-  private addDevTools() {
-    this.addMenu(
-      this.divCfgs,
-      this.newMenu(QinNames.DevTools, "/pub/qin_desk/assets/menu-devtools.ico", (ev) => {
-        if (ev.isMain) {
-          QinSoul.head.toggleDevTools();
-          this.qinpel.jobbed.close();
-        }
-      })
-    );
   }
 
   private addQinBases(bases: string[]) {
