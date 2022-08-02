@@ -93,6 +93,9 @@ export class QinDesk {
       return;
     }
     let actual = this.qinpel.chief.loadConfig(QinNames.QinBaseSelected);
+    if (bases.indexOf(actual) == -1) {
+      actual = null;
+    }
     if (!actual) {
       actual = bases[0];
       this.qinpel.chief.saveConfig(QinNames.QinBaseSelected, actual);
