@@ -137,7 +137,11 @@ export class QinDesk {
     return menuBody;
   }
 
-  private newCombo(title: string, items: ComboItem[], action: QinWaiter): HTMLDivElement {
+  private newCombo(
+    title: string,
+    items: ComboItem[],
+    action: QinWaiter<string>
+  ): HTMLDivElement {
     const menuBody = document.createElement("div");
     styles.applyOnMenuBody(menuBody);
     const menuText = document.createElement("span");

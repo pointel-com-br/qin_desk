@@ -23,7 +23,7 @@ export class QinJobber {
   private _appNameOrAddress: string;
   private _appName: string;
   private _options: any;
-  private _waiters: QinWaiter[] = [];
+  private _waiters: QinWaiter<any>[] = [];
   private _rndID = Math.floor(Math.random() * 1000000);
   private _divFrame = document.createElement("div");
   private _divHead = document.createElement("div");
@@ -268,7 +268,7 @@ export class QinJobber {
     this._options = {};
   }
 
-  public addWaiter(waiter: QinWaiter) {
+  public addWaiter(waiter: QinWaiter<any>) {
     this._waiters.push(waiter);
   }
 
