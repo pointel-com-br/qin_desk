@@ -316,6 +316,7 @@ export class QinJobber {
     styles.applyOnStatusBodyItem(divError);
     divError.style.backgroundColor = "#e5091427";
     this._statusBody.appendChild(divError);
+    console.log(error);
   }
 
   private getDisplayStatusMessage(message: string): string {
