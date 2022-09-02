@@ -46,6 +46,8 @@ export class QinJobber {
   private _lastWidth = -1;
   private _lastHeight = -1;
 
+  private _wasClosed = false;
+
   public constructor(chief: QinChief, title: string, appNameOrAddress: string, options?: any) {
     this._chief = chief;
     this._title = this.initFrameTitle(title);
@@ -546,6 +548,11 @@ export class QinJobber {
     this.saveFrameBounds();
     this._chief.delChild(this._divFrame);
     this._chief.delJobber(this);
+    this._wasClosed = true;
+  }
+
+  public get wasClosed() {
+    return this._wasClosed;
   }
 }
 
