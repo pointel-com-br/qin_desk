@@ -65,7 +65,6 @@ export class QinDesk {
             this.newMenu(title, icon, (ev) => {
               if (ev.isMain) {
                 this.qinpel.chief.newJobber(title, name);
-                this.qinpel.jobbed.close();
               }
             })
           );
