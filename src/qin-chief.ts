@@ -18,6 +18,8 @@ export class QinChief {
 
   private _talker = new QinTalker(this);
 
+  private _menuJobbed: QinJobber = null;
+
   public constructor() {
     this.initBody();
     this.initMenu();
@@ -60,7 +62,11 @@ export class QinChief {
         if (event.hasShift) {
           document.body.requestFullscreen();
         } else {
-          this.newJobber("Qinpel", "/pub/qin_desk/desk.html");
+          if (this._menuJobbed == null || this._menuJobbed.wasClosed) {
+            this._menuJobbed = this.newJobber("Qinpel", "/pub/qin_desk/desk.html");
+          } else {
+            this._menuJobbed.show();
+          }
         }
       }
       return false;
