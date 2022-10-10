@@ -211,7 +211,7 @@ export class QinJobber {
     QinSoul.arms.addMover([this._divTitle, this._footStatusText], this._divFrame, {
       onDouble: () => this.maximize(),
       onEnd: () => {
-        this._chief.showElement(this._divFrame);
+        this.show();
         QinSoul.skin.clearSelection();
       },
     });
@@ -221,7 +221,7 @@ export class QinJobber {
         this._maximized = false;
         this._lastWidth = parseInt(this._divFrame.style.width, 10);
         this._lastHeight = parseInt(this._divFrame.style.height, 10);
-        this._chief.showElement(this._divFrame);
+        this.show();
         QinSoul.skin.clearSelection();
       },
     });
