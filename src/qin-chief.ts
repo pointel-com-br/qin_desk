@@ -110,6 +110,10 @@ export class QinChief {
     this._divBody.removeChild(child);
   }
 
+  public hasChild(child: HTMLElement) {
+    return this._divBody.contains(child);
+  }
+
   public newDesk(qinpel: Qinpel, options?: QinDeskSet): QinDesk {
     return new QinDesk(qinpel, options);
   }
@@ -154,6 +158,11 @@ export class QinChief {
     if (index > -1) {
       this._jobbers.splice(index, 1);
     }
+  }
+
+  public hasJobber(jobber: QinJobber) {
+    const index = this._jobbers.indexOf(jobber);
+    return index > -1;
   }
 
   public showElement(element: HTMLElement) {
