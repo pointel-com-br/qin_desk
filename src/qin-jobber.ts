@@ -346,6 +346,7 @@ export class QinJobber {
 
   public show() {
     this._chief.showElement(this._divFrame);
+    this._iframeBody.focus();
   }
 
   public showChiefMenu() {
