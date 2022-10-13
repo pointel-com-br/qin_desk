@@ -48,6 +48,9 @@ export class QinJobber {
 
   private _wasClosed = false;
 
+  private _onFocusGain: Array<Function> = null;
+  private _onFocusLost: Array<Function> = null;
+
   public constructor(chief: QinChief, title: string, appNameOrAddress: string, options?: any) {
     this._chief = chief;
     this._title = this.initFrameTitle(title);
@@ -180,6 +183,36 @@ export class QinJobber {
     this._divBody.appendChild(this._iframeBody);
   }
 
+  private initFocusVerifier() {
+    let isFocused = false;
+    const checkFocus = () => {
+      if (document.activeElement == this._iframeBody) {
+        if (!isFocused) {
+          isFocused = true;
+          this._chief.showElement(this._divFrame);
+          if (this._onFocusGain) {
+            for (const toCall of this._onFocusGain) {
+              toCall();
+            }
+          }
+        }
+      } else {
+        if (isFocused) {
+          isFocused = false;
+          if (this._onFocusLost) {
+            for (const toCall of this._onFocusLost) {
+              toCall();
+            }
+          }
+        }
+      }
+      if (this._chief.hasChild(this._divFrame)) {
+        window.setTimeout(checkFocus, 1000);
+      }
+    };
+    checkFocus();
+  }
+
   private initStatusBody() {
     this._statusBody.id = "QinpelStatusBodyID" + this._rndID;
     styles.applyOnStatusBody(this._statusBody);
@@ -296,6 +329,7 @@ export class QinJobber {
     //@ts-ignore
     this._iframeBody.qinpel = new Qinpel(this._chief, this);
     this._chief.addChild(this._divFrame);
+    this.initFocusVerifier();
     this.show();
   }
 
@@ -554,6 +588,40 @@ export class QinJobber {
 
   public get wasClosed() {
     return this._wasClosed;
+  }
+
+  public addOnFocusGain(toCall: Function) {
+    if (!this._onFocusGain) {
+      this._onFocusGain = [];
+    }
+    this._onFocusGain.push(toCall);
+  }
+
+  public delOnFocusGain(toCall: Function) {
+    if (!this._onFocusGain) {
+      return;
+    }
+    const index = this._onFocusGain.indexOf(toCall);
+    if (index > -1) {
+      this._onFocusGain.splice(index, 1);
+    }
+  }
+
+  public addOnFocusLost(toCall: Function) {
+    if (!this._onFocusLost) {
+      this._onFocusLost = [];
+    }
+    this._onFocusLost.push(toCall);
+  }
+
+  public delOnFocusLost(toCall: Function) {
+    if (!this._onFocusLost) {
+      return;
+    }
+    const index = this._onFocusLost.indexOf(toCall);
+    if (index > -1) {
+      this._onFocusLost.splice(index, 1);
+    }
   }
 }
 
