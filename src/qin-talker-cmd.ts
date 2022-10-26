@@ -12,7 +12,7 @@ export class QinTalkerCmd {
   public list(): Promise<string[]> {
     return new Promise<string[]>((resolve, reject) => {
       this._talker
-        .get("/list/cmds")
+        .get("/list/cmd")
         .then((res) => resolve(QinBody.getTextLines(res.data)))
         .catch((err) => reject(err));
     });

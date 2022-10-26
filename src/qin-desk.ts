@@ -31,7 +31,7 @@ export class QinDesk {
     this.divMain.appendChild(this.divApps);
     styles.applyOnDivLine(this.divApps);
     this.qinpel.talk
-      .get("/list/apps")
+      .get("/list/app")
       .then((res) => {
         for (let name of this.listApps(res.data)) {
           this.tryAddApp(name);
@@ -80,7 +80,7 @@ export class QinDesk {
     this.divMain.appendChild(this.divCfgs);
     styles.applyOnDivLine(this.divCfgs);
     if (shouldAdd(this.options.addsCfgs, { title: "QinBases" })) {
-      this.qinpel.talk.get("/list/bases").then((res) => {
+      this.qinpel.talk.get("/list/base").then((res) => {
         let bases = this.qinpel.our.soul.body.getTextLines(res.data);
         this.addQinBases(bases);
       });
