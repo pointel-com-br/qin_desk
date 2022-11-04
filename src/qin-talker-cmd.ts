@@ -1,4 +1,5 @@
 import { QinBody } from "qin_soul";
+import { QinExecute } from "./qin-execute";
 import { QinTalker } from "./qin-talker";
 import { IssuedToken } from "./qin-talker-issued";
 
@@ -18,7 +19,7 @@ export class QinTalkerCmd {
     });
   }
 
-  public run(start: CmdRunStart): Promise<IssuedToken> {
+  public run(start: QinExecute): Promise<IssuedToken> {
     return new Promise<string>((resolve, reject) => {
       this._talker
         .post("/cmd/run", start)
@@ -27,9 +28,3 @@ export class QinTalkerCmd {
     });
   }
 }
-
-export type CmdRunStart = {
-  exec: string;
-  args?: string[];
-  input?: string[];
-};
