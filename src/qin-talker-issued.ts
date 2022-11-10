@@ -1,5 +1,5 @@
+import { QinBody } from "qin_soul";
 import { QinTalker } from "./qin-talker";
-import { QinBody } from "qin_soul"
 
 export class QinTalkerIssued {
   private readonly _talker: QinTalker;
