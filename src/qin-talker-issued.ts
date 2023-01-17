@@ -1,4 +1,3 @@
-import { QinBody } from "qin_soul";
 import { QinTalker } from "./qin-talker";
 
 export class QinTalkerIssued {
@@ -12,44 +11,7 @@ export class QinTalkerIssued {
     return new Promise<IssuedAnswer>((resolve, reject) => {
       this._talker
         .post("/issued", question)
-        .then((res) => {
-          const lines = QinBody.getTextLines(res.data);
-          let answer: IssuedAnswer = {};
-          let i = 0;
-          let gettingResultLines = false;
-          while (i < lines.length) {
-            if (!gettingResultLines) {
-              switch (lines[i].trim()) {
-                case "Created At:":
-                  i++;
-                  answer.createdAt = +lines[i].trim();
-                  break;
-                case "Result Coded:":
-                  i++;
-                  answer.resultCoded = +lines[i].trim();
-                  break;
-                case "Is Done:":
-                  i++;
-                  answer.isDone = lines[i].trim() === "true";
-                  break;
-                case "Finished At:":
-                  i++;
-                  answer.finishedAt = +lines[i].trim();
-                  break;
-                case "Result Lines:":
-                  answer.resultLines = [];
-                  gettingResultLines = true;
-                  break;
-                default:
-                  break;
-              }
-            } else {
-              answer.resultLines.push(lines[i]);
-            }
-            i++;
-          }
-          resolve(answer);
-        })
+        .then((res) => resolve(res.data as IssuedAnswer))
         .catch((err) => reject(err));
     });
   }
@@ -83,17 +45,30 @@ export type IssuedToken = string;
 export type IssuedQuestion = {
   token: string;
   askCreatedAt?: boolean;
-  askResultLines?: boolean;
-  askResultLinesFrom?: number;
-  askResultCoded?: boolean;
+  askOutLines?: boolean;
+  askOutLinesFrom?: number;
+  askOutLinesSize?: boolean;
+  askErrLines?: boolean;
+  askErrLinesFrom?: number;
+  askErrLinesSize?: boolean;
+  askResultCode?: boolean;
   askIsDone?: boolean;
+  askHasOut?: boolean;
+  askHasErr?: boolean;
   askFinishedAt?: boolean;
 };
 
 export type IssuedAnswer = {
   createdAt?: number;
-  resultLines?: string[];
-  resultCoded?: number;
+  outLines?: string;
+  outLinesFrom?: string;
+  outLinesSize?: number;
+  errLines?: string;
+  errLinesFrom?: string;
+  errLinesSize?: number;
+  resultCode?: number;
   isDone?: boolean;
+  hasOut?: boolean;
+  hasErr?: boolean;
   finishedAt?: number;
 };
