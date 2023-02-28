@@ -38,6 +38,29 @@ export class QinTalkerIssued {
       askIsDone();
     });
   }
+
+  public askConstantly(question: IssuedQuestion, process: AskConstantly) {
+    const ask = () => {
+      this.ask(question)
+        .then((res) => {
+          if (process.onReceive) {
+            process.onReceive(res);
+          }
+          if (!process.stop) {
+            setTimeout((_) => ask(), 700);
+          }
+        })
+        .catch((err) => {
+          if (process.onError) {
+            process.onError(err);
+          }
+          if (!process.stop) {
+            setTimeout((_) => ask(), 700);
+          }
+        });
+    };
+    ask();
+  }
 }
 
 export type IssuedToken = string;
@@ -71,4 +94,10 @@ export type IssuedAnswer = {
   hasOut?: boolean;
   hasErr?: boolean;
   finishedAt?: number;
+};
+
+export type AskConstantly = {
+  stop?: boolean;
+  onReceive?: (received: IssuedAnswer) => void;
+  onError?: (err: any) => void;
 };
