@@ -19,10 +19,10 @@ export class QinTalkerCmd {
     });
   }
 
-  public run(start: QinExecute): Promise<IssuedToken> {
+  public run(execution: QinExecute): Promise<IssuedToken> {
     return new Promise<string>((resolve, reject) => {
       this._talker
-        .post("/cmd/run", start)
+        .post("/cmd/run", execution)
         .then((res) => resolve(res.data))
         .catch((err) => reject(err));
     });

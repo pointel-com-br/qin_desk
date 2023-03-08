@@ -19,10 +19,10 @@ export class QinTalkerGiz {
     });
   }
 
-  public run(start: QinExecute): Promise<IssuedToken> {
+  public run(execution: QinExecute): Promise<IssuedToken> {
     return new Promise<string>((resolve, reject) => {
       this._talker
-        .post("/giz/run", start)
+        .post("/giz/run", execution)
         .then((res) => resolve(res.data))
         .catch((err) => reject(err));
     });
