@@ -61,6 +61,68 @@ export class QinTalkerIssued {
     };
     ask();
   }
+
+  public readStreamOut(reader: AskStream) {
+    this.readStream(StreamKind.OUT, reader);
+  }
+
+  public readStreamErr(reader: AskStream) {
+    this.readStream(StreamKind.ERR, reader);
+  }
+
+  public readStream(kind: StreamKind, reader: AskStream) {
+    let from = 0;
+    const ask = () => {
+      let question: IssuedQuestion = null;
+      if (kind === StreamKind.ERR) {
+        question = {
+          token: reader.token,
+          askIsDone: true,
+          askErrLinesFrom: from,
+          askErrLinesUntil: from + reader.chunks,
+          askErrLinesSize: true,
+        };
+      } else if (kind === StreamKind.OUT) {
+        question = {
+          token: reader.token,
+          askIsDone: true,
+          askOutLinesFrom: from,
+          askOutLinesUntil: from + reader.chunks,
+          askOutLinesSize: true,
+        };
+      }
+      this.ask(question)
+        .then((res) => {
+          let finished = false;
+          let got = 0;
+          if (res.outLinesFrom) {
+            if (reader.onReceive) {
+              res.outLinesFrom.forEach((line) => {
+                reader.onReceive(line);
+              });
+            }
+            got = res.outLinesFrom.length;
+          }
+          from = from + got;
+          console.log(res.isDone, from, res.outLinesSize);
+          if (res.isDone && from >= res.outLinesSize) {
+            finished = true;
+            if (reader.onFinish) {
+              reader.onFinish(res.outLinesSize);
+            }
+          }
+          if (!finished) {
+            setTimeout((_) => ask(), 70);
+          }
+        })
+        .catch((err) => {
+          if (reader.onError) {
+            reader.onError(err);
+          }
+        });
+    };
+    ask();
+  }
 }
 
 export type IssuedToken = string;
@@ -70,9 +132,11 @@ export type IssuedQuestion = {
   askCreatedAt?: boolean;
   askOutLines?: boolean;
   askOutLinesFrom?: number;
+  askOutLinesUntil?: number;
   askOutLinesSize?: boolean;
   askErrLines?: boolean;
   askErrLinesFrom?: number;
+  askErrLinesUntil?: number;
   askErrLinesSize?: boolean;
   askResultCode?: boolean;
   askIsDone?: boolean;
@@ -84,10 +148,10 @@ export type IssuedQuestion = {
 export type IssuedAnswer = {
   createdAt?: number;
   outLines?: string;
-  outLinesFrom?: string;
+  outLinesFrom?: string[];
   outLinesSize?: number;
   errLines?: string;
-  errLinesFrom?: string;
+  errLinesFrom?: string[];
   errLinesSize?: number;
   resultCode?: number;
   isDone?: boolean;
@@ -101,3 +165,16 @@ export type AskConstantly = {
   onReceive?: (received: IssuedAnswer) => void;
   onError?: (err: any) => void;
 };
+
+export type AskStream = {
+  token: IssuedToken;
+  chunks: number;
+  onReceive?: (line: string) => void;
+  onFinish?: (size: number) => void;
+  onError?: (err: any) => void;
+};
+
+export enum StreamKind {
+  OUT = "out",
+  ERR = "err",
+}
