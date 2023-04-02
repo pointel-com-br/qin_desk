@@ -179,6 +179,7 @@ export class QinJobber {
     this._iframeBody.src = address;
     this._iframeBody.onload = (_) => {
       styles.applyOnIFrameLoad(this._iframeBody);
+      QinSoul.head.stopBrowserShortcuts(this._iframeBody.contentWindow);
     };
     this._divBody.appendChild(this._iframeBody);
   }
