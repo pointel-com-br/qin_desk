@@ -1,6 +1,6 @@
 export enum QinNames {
-  DevTools = "DevTools",
-  QinBases = "QinBases",
-  QinBaseSelected = "QinBaseSelected",
-  QinSetup = "QinSetup",
+    DevTools = "DevTools",
+    QinBases = "QinBases",
+    QinBaseSelected = "QinBaseSelected",
+    QinSetup = "QinSetup",
 }

@@ -4,27 +4,27 @@ import { QinTalker } from "./qin-talker";
 import { IssuedToken } from "./qin-talker-issued";
 
 export class QinTalkerCmd {
-  private readonly _talker: QinTalker;
+    private readonly _talker: QinTalker;
 
-  public constructor(talker: QinTalker) {
-    this._talker = talker;
-  }
+    public constructor(talker: QinTalker) {
+        this._talker = talker;
+    }
 
-  public list(): Promise<string[]> {
-    return new Promise<string[]>((resolve, reject) => {
-      this._talker
-        .get("/list/cmd")
-        .then((res) => resolve(QinBody.getTextLines(res.data)))
-        .catch((err) => reject(err));
-    });
-  }
+    public list(): Promise<string[]> {
+        return new Promise<string[]>((resolve, reject) => {
+            this._talker
+                .get("/list/cmd")
+                .then((res) => resolve(QinBody.getTextLines(res.data)))
+                .catch((err) => reject(err));
+        });
+    }
 
-  public run(execution: QinExecute): Promise<IssuedToken> {
-    return new Promise<string>((resolve, reject) => {
-      this._talker
-        .post("/cmd/run", execution)
-        .then((res) => resolve(res.data))
-        .catch((err) => reject(err));
-    });
-  }
+    public run(execution: QinExecute): Promise<IssuedToken> {
+        return new Promise<string>((resolve, reject) => {
+            this._talker
+                .post("/cmd/run", execution)
+                .then((res) => resolve(res.data))
+                .catch((err) => reject(err));
+        });
+    }
 }

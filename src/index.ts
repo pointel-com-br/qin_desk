@@ -5,5 +5,5 @@ const chief = new QinChief();
 chief.putInDocument();
 
 window.onload = () => {
-  QinSoul.head.stopBrowserShortcuts(window);
-}
+    QinSoul.head.stopBrowserShortcuts(window);
+};

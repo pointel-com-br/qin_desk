@@ -5,12 +5,12 @@ import { QinNames } from "./qin-names";
 const sha1 = (text: string) => SHA1(text).toString();
 
 const crypto = {
-  sha1,
+    sha1,
 };
 
 export const QinOurs = {
-  soul: { ...QinSoul },
-  names: QinNames,
-  crypto,
-  tr,
+    soul: { ...QinSoul },
+    names: QinNames,
+    crypto,
+    tr,
 };
